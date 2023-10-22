@@ -6,6 +6,12 @@ local gears = require("gears")
 --read from a file
 -- Opens a file in read
 local read_file_first_line = function(path)
+	local loaded, file = pcall(io.open(path, "r"))
+
+	if not loaded then
+		return ""
+	end
+
 	file = io.open(path, "r")
 	-- sets the default input file as test.lua
 	io.input(file)
@@ -19,7 +25,7 @@ end
 -- Create a widget and update its content using the output of a shell
 -- command every 10 seconds:
 local battery = wibox.widget({
-	text = "",
+	text = "󱉝 ",
 	font = "14",
 	widget = wibox.widget.textbox,
 	set_battery = function(self, val)
@@ -44,6 +50,9 @@ gears.timer({
 		capacity = tonumber(read_file_first_line("/sys/class/power_supply/BAT1/capacity"))
 		cord_connected = tonumber(read_file_first_line("/sys/class/power_supply/ACAD/online"))
 		status = read_file_first_line("/sys/class/power_supply/BAT1/status"):lower()
+		if capacity == nil then
+			return
+		end
 		if status == "full" then
 			if cord_connected then
 				status = "charging"

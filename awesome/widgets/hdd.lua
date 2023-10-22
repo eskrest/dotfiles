@@ -23,11 +23,20 @@ gears.timer({
 	autostart = true,
 	callback = function()
 		awful.spawn.easy_async({ "sh", "-c", "df -h | awk '{ print $1\" \"$5}'" }, function(out)
-			-- require("naughty").notify({ text = out })
+			local result = ""
+
 			nvme_use = out:match("^.*nvme0n1p2%s([%d]*)%%")
+			if not nvme_use == nil then
+				result = icon .. nvme_use .. "% "
+			end
+
 			ssd_use = out:match("^.*sda1%s([%d]*)%%")
 			-- require("naughty").notify({ text = ssd_use })
-			hdd.capacity = icon .. nvme_use .. "% " .. icon .. ssd_use .. "%  "
+			if not ssd_use == nil then
+				result = result .. icon .. ssd_use .. "%  "
+			end
+
+			hdd.capacity = result
 		end)
 	end,
 })

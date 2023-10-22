@@ -8,7 +8,7 @@ local widget = {}
 local timer = nil
 
 local sound_widget = wibox.widget({
-	text = "",
+	text = "󰖁  ",
 	font = "14",
 	widget = wibox.widget.textbox,
 	set_volume = function(self, val)
@@ -29,6 +29,11 @@ local icons = {
 local update = function()
 	awful.spawn.easy_async({ "sh", "-c", "pactl get-sink-volume 0" }, function(out)
 	local vol = out:match("(%d%d?%d?)%%")
+
+	if vol == nil then
+		return
+	end
+
 	local index = vol / 25
 	index = tostring(index):match("(%d)%.")
 	-- naughty.notify({ text = vol .. " " .. index })

@@ -716,5 +716,3 @@ beautiful.font = "JetBrains Mono Nerd Font"
 -- awful.spawn.with_shell("picom -cf --vsync -D 2 -i 0.7 --active-opacity 0.8")
 awful.spawn.with_shell("picom")
 awful.spawn.with_shell("xrandr -s 1920x1080")
-awful.util.spawn("nm-applet")
-awful.util.spawn("pasystray")
