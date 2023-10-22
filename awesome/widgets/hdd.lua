@@ -18,7 +18,7 @@ local hdd = wibox.widget({
 })
 
 gears.timer({
-	timeout = 6,
+	timeout = 60,
 	call_now = true,
 	autostart = true,
 	callback = function()
