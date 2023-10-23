@@ -2,6 +2,7 @@
 local wibox = require("wibox")
 local gears = require("gears")
 local awful = require("awful")
+local naughty = require("naughty")
 
 --helper functions
 --read from a file
@@ -54,20 +55,20 @@ local popup_widget = awful.popup({
 	widget = ssid_widget,
 	visible = false,
 	ontop = true,
-	type = "desktop",
+	type = "dock",
+	shape = gears.shape.rounded_rect,
+	border_color = "#222222",
+	border_width = 10,
 })
 
--- wifi_widget:connect_signal("mouse::enter", function()
--- 	popup_widget:move_next_to(mouse.current_widget_geometry)
--- 	popup_widget.visible = true
--- end)
---
--- wifi_widget:connect_signal("mouse::leave", function()
--- 	gears.timer.start_new(1, function()
--- 		popup_widget.visible = false
--- 		return false
--- 	end)
--- end)
+wifi_widget:connect_signal("mouse::enter", function()
+	popup_widget:move_next_to(mouse.current_widget_geometry)
+	popup_widget.visible = true
+end)
+
+wifi_widget:connect_signal("mouse::leave", function()
+	popup_widget.visible = false
+end)
 
 local connect_widget = wibox.widget({
 	text = "",
@@ -115,14 +116,14 @@ local update = function()
 	-- awful.spawn.easy_async({ "sh", "-c", "acpi | sed -n 's/^.*, ([0-9]*)%/\1/p'" }, function(out)
 	awful.spawn.easy_async({ "sh", "-c", "iwctl station wlan0 show" }, function(out)
 		networks = ""
-		-- require("naughty").notify({ text = out })
+		-- naughty.notify({ text = out })
 		ssid = out:match("Connected network %s*([%w|%p|%s]*)%c%s*IPv4") or "N/A"
 		ssid = ssid:gsub("%s*$", "")
 
 		-- create the known network
 		-- list for the ssid widget text
 		for index, network in pairs(known_networks) do
-			-- require("naughty").notify({ text = tostring(index) })
+			-- naughty.notify({ text = tostring(index) })
 			if network == ssid then
 				network = " 󱚽 " .. " " .. index .. ". " .. network .. " "
 			else
@@ -148,7 +149,7 @@ local update = function()
 		known_networks = {}
 		local index = 0
 		for line in out:gmatch("([^\n]*)\n?") do
-			-- require("naughty").notify({ text = tostring(index) })
+			-- naughty.notify({ text = tostring(index) })
 			-- need to remove the table header from iwctl
 			if
 				not line:match("---")
@@ -166,8 +167,12 @@ local update = function()
 end
 
 wifi_widget:connect_signal("button::press", function(c, _, _, button)
+	popup_widget.visible = false
 	if not button == 1 then return end
-	if networks == "" then return end
+	if networks == "" then 
+		naughty.notify({ text = "no WiFi networks available" })
+		return 
+	end
 	update()
 	select_network()
 	prompt_widget:move_next_to(mouse.current_widget_geometry)
@@ -183,7 +188,7 @@ gears.timer({
 	call_now = true,
 	autostart = true,
 	callback = function()
-		-- require("naughty").notify({ text = tostring(prompt_widget.visible) })
+		-- naughty.notify({ text = tostring(prompt_widget.visible) })
 		if not prompt_widget.visible then
 			update()
 		end
