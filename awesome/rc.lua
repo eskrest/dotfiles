@@ -480,7 +480,7 @@ clientkeys = gears.table.join(
 		-- awful.titlebar.hide(c)
 		c:raise()
 	end, { description = "toggle between fullscreen and floating", group = "client" }),
-	awful.key({ modkey, "Shift" }, "c", function(c)
+	awful.key({ modkey }, "q", function(c)
 		c:kill()
 	end, { description = "close", group = "client" })
 	-- awful.key(
@@ -603,6 +603,7 @@ awful.rules.rules = {
 				"DTA", -- Firefox addon DownThemAll.
 				"copyq", -- Includes session name in class.
 				"pinentry",
+				"zoom",
 			},
 			class = {
 				"Arandr",
@@ -615,6 +616,7 @@ awful.rules.rules = {
 				"Wpa_gui",
 				"veromix",
 				"xtightvncviewer",
+				"Virt-manager",
 			},
 
 			-- Note that the name property shown in xprop might be set slightly after creation of the client
@@ -635,7 +637,9 @@ awful.rules.rules = {
 	{ rule_any = { type = { "normal", "dialog" } }, properties = { titlebars_enabled = false } },
 
 	-- Set Firefox to always map on the tag named "2" on screen 1.
-	{ rule = { class = "Google" }, properties = { screen = 1, tag = "1" } },
+	-- { rule = { class = "Google" }, properties = { screen = 1, tag = "1" } },
+	{ rule = { class = "Thorium-browser" }, properties = { screen = 1, tag = "1" } },
+	{ rule = { class = "Firefox" }, properties = { screen = 1, tag = "5" } },
 }
 -- }}}
 
