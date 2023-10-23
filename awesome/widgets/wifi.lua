@@ -68,13 +68,13 @@ wifi_widget:connect_signal("mouse::leave", function()
 	end)
 end)
 
-ssid_widget:connect_signal("mouse::enter", function()
-	popup_widget.visible = true
-end)
+-- ssid_widget:connect_signal("mouse::enter", function()
+-- 	popup_widget.visible = true
+-- end)
 
-ssid_widget:connect_signal("button::press", function(c, _, _, button)
-	require("naughty").notify({ text = "hui" })
-end)
+-- ssid_widget:connect_signal("button::press", function(c, _, _, button)
+-- 	require("naughty").notify({ text = "hui" })
+-- end)
 
 gears.timer({
 	timeout = 10,
@@ -87,12 +87,14 @@ gears.timer({
 		-- awful.spawn.easy_async({ "sh", "-c", "acpi | sed -n 's/^.*, ([0-9]*)%/\1/p'" }, function(out)
 		awful.spawn.easy_async({ "sh", "-c", "iwctl station wlan0 show" }, function(out)
 			-- require("naughty").notify({ text = out })
-			ssid = out:match("Connected network %s*([%w|%p]*)") or "N/A"
+			ssid = out:match("Connected network %s*([%w|%p|%s]*)%c%s*IPv4") or "N/A"
+			ssid = ssid:gsub("%s*$", "")
 
 			-- create the known network
 			-- list for the ssid widget text
 			local networks = ""
 			for network in pairs(known_networks) do
+				-- require("naughty").notify({ text = tostring(ssid == network) })
 				if network == ssid then
 					network = " 󱚽 " .. network .. " "
 				else
@@ -112,15 +114,14 @@ gears.timer({
 			end
 		end)
 
-		awful.spawn.easy_async("iwctl known-networks list", function(out)
+		awful.spawn.easy_async("iwctl station wlan0 get-networks", function(out)
 			known_networks = {}
 			for line in out:gmatch("([^\n]*)\n?") do
 				-- need to remove the table header from iwctl
-				if not line:match("---") and not line:match("Known Networks") and not line:match("Name%s*Security") then
-					local net = line:match("([%w|%p]*)%s*psk")
-					if not net == nil then
-						known_networks[net] = net
-					end
+				if not line:match("---") and not line:match("Available networks") and not line:match("Network name%s*Security") then
+					local net = line:match("%[?0?m?%s*([%w|%p%s]*)%s*psk")
+					net = net:gsub("%s*$", "")
+					known_networks[net] = net
 				end
 			end
 			ssid = out:match("Connected network %s*([%w|%p]*)") or "N/A"

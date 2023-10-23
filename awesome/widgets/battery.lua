@@ -6,13 +6,10 @@ local gears = require("gears")
 --read from a file
 -- Opens a file in read
 local read_file_first_line = function(path)
-	local loaded, file = pcall(io.open(path, "r"))
-
-	if not loaded then
+	file = io.open(path, "r")
+	if file == nil then
 		return ""
 	end
-
-	file = io.open(path, "r")
 	-- sets the default input file as test.lua
 	io.input(file)
 	-- prints the first line of the file
@@ -47,9 +44,12 @@ gears.timer({
 		-- end)
 		-- /sys/class/power_supply/BAT1/capacity = 98
 		-- /sys/class/power_supply/BAT1/status = Discharging | Charging | Full
-		capacity = tonumber(read_file_first_line("/sys/class/power_supply/BAT1/capacity"))
-		cord_connected = tonumber(read_file_first_line("/sys/class/power_supply/ACAD/online"))
-		status = read_file_first_line("/sys/class/power_supply/BAT1/status"):lower()
+		capacity = read_file_first_line("/sys/class/power_supply/BAT1/capacity")
+		capacity = tonumber(capacity)
+		cord_connected = read_file_first_line("/sys/class/power_supply/ACAD/online")
+		cord_connected = tonumber(cord_connected)
+		status = read_file_first_line("/sys/class/power_supply/BAT1/status")
+		status = status:lower()
 		if capacity == nil then
 			return
 		end
@@ -67,7 +67,7 @@ gears.timer({
 				"󰢟 ", "󰢜 ", "󰂆 ", "󰂇 ", "󰂈 ", "󰢝 ", "󰂉 ", "󰢞 ", "󰂊 ", "󰂋 ", "󰂅 "
 			},
 			discharging = {
-				"󰂎", "󰁺", "󰁻", "󰁼", "󰁽", "󰁾", "󰁿", "󰂀", "󰂁", "󰂂", "󰁹"
+				"󰂎 ", "󰁺 ", "󰁻 ", "󰁼 ", "󰁽 ", "󰁾 ", "󰁿 ", "󰂀 ", "󰂁 ", "󰂂 ", "󰁹 "
 			},
 		}
 		icon_index = math.floor(capacity / 10) + 1
