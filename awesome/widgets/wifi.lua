@@ -166,6 +166,8 @@ local update = function()
 end
 
 wifi_widget:connect_signal("button::press", function(c, _, _, button)
+	if not button == 1 then return end
+	if networks == "" then return end
 	update()
 	select_network()
 	prompt_widget:move_next_to(mouse.current_widget_geometry)
