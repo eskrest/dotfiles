@@ -154,6 +154,8 @@ local mywifibar = require("widgets/wifi")
 local sound_widget = require("widgets/sound")
 local mysoundbar = sound_widget.widget
 local myhddbar = require("widgets/hdd")
+local brightness_widget = require("widgets/brightness")
+local mybrightnessbar = brightness_widget.widget
 
 ------------ testing stuff ----------------
 ------------ testing stuff ----------------
@@ -292,6 +294,7 @@ awful.screen.connect_for_each_screen(function(s)
 			layout = wibox.layout.fixed.horizontal,
 			mykeyboardlayout,
 			-- systray,
+			mybrightnessbar,
 			myhddbar,
 			mywifibar,
 			mysoundbar,

@@ -3,17 +3,17 @@ local wibox = require("wibox")
 local gears = require("gears")
 local awful = require("awful")
 
-local icon = " "
+local icon = "<span font='14'> </span>"
 local hdd = wibox.widget({
 	{
 		id = "capacitybox",
-		text = "",
+		markup = "",
 		widget = wibox.widget.textbox,
 	},
 	widget = wibox.widget.textbox,
 	layout = wibox.layout.align.horizontal,
 	set_capacity = function(self, val)
-		self.capacitybox.text = val
+		self.capacitybox.markup = val
 	end,
 })
 
