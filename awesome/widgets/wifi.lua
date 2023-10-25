@@ -157,6 +157,7 @@ local update = function()
 				and not line:match("Network name%s*Security")
 			then
 				local net = line:match("%[?0?m?%s*([%w|%p%s]*)%s*psk")
+				if net == nil then return end
 				net = net:gsub("%s*$", "")
 				index = index + 1
 				known_networks[index] = net

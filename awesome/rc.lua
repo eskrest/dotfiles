@@ -156,6 +156,8 @@ local mysoundbar = sound_widget.widget
 local myhddbar = require("widgets/hdd")
 local brightness_widget = require("widgets/brightness")
 local mybrightnessbar = brightness_widget.widget
+local numlock_widget = require("widgets/numlock")
+local mynumbar = numlock_widget.widget
 
 ------------ testing stuff ----------------
 ------------ testing stuff ----------------
@@ -294,6 +296,7 @@ awful.screen.connect_for_each_screen(function(s)
 			layout = wibox.layout.fixed.horizontal,
 			mykeyboardlayout,
 			-- systray,
+			mynumbar,
 			mybrightnessbar,
 			myhddbar,
 			mywifibar,
@@ -447,14 +450,38 @@ globalkeys = gears.table.join(
 	-- Audio control
 	awful.key({ modkey }, "o", function()
 		sound_widget:volume_up()
-		-- awful.spawn.with_shell("pactl -- set-sink-volume 0 +10%")
-		-- naughty.notify({ text = "volume +10%" })
 	end, { description = "increase volume", group = "awesome" }),
+	awful.key({ }, "XF86AudioRaiseVolume", function()
+		sound_widget:volume_up()
+	end, { description = "increase volume", group = "awesome" }),
+
 	awful.key({ modkey }, "i", function()
 		sound_widget:volume_down()
-		-- awful.spawn.with_shell("pactl -- set-sink-volume 0 -10%")
-		-- naughty.notify({ text = "volume -10%" })
 	end, { description = "decrese volume", group = "awesome" }),
+	awful.key({ }, "XF86AudioLowerVolume", function()
+		sound_widget:volume_down()
+	end, { description = "decrese volume", group = "awesome" }),
+
+	-- Brightness control
+	awful.key({ }, "XF86MonBrightnessUp", function()
+		brightness_widget:brightness_up()
+	end, { description = "increase brightness", group = "awesome" }),
+
+	awful.key({ }, "XF86MonBrightnessDown", function()
+		brightness_widget:brightness_down()
+	end, { description = "decrese brightness", group = "awesome" }),
+
+	--------------------------------------
+	-- Numlock / capslock
+	awful.key({ }, "Caps_Lock", function()
+		numlock_widget:toggle_caps()
+	end, { description = "caps lock widget update", group = "awesome" }),
+
+	awful.key({ }, "Num_Lock", function()
+		numlock_widget:toggle_num()
+	end, { description = "num lock widget update", group = "awesome" }),
+
+	--------------------------------------
 	awful.key({ modkey }, "b", function()
 		awful.util.spawn("google-chrome")
 	end, { description = "open browser", group = "awesome" }),
@@ -723,3 +750,5 @@ beautiful.font = "JetBrains Mono Nerd Font"
 -- awful.spawn.with_shell("picom -cf --vsync -D 2 -i 0.7 --active-opacity 0.8")
 awful.spawn.with_shell("picom")
 awful.spawn.with_shell("xrandr -s 1920x1080")
+-- automatic lock screen
+awful.spawn.with_shell("xss-lock -- dm-tool lock")
