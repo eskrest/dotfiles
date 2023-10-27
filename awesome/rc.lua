@@ -751,4 +751,4 @@ beautiful.font = "JetBrains Mono Nerd Font"
 awful.spawn.with_shell("picom")
 awful.spawn.with_shell("xrandr -s 1920x1080")
 -- automatic lock screen
-awful.spawn.with_shell("xss-lock -- dm-tool lock")
+awful.spawn.with_shell("xautolock -time 20 -locker 'dm-tool lock'")
