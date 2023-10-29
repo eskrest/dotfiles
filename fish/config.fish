@@ -16,3 +16,4 @@ fish_add_path $ANDROID_HOME/emulator
 fish_add_path $ANDROID_HOME/tools
 fish_add_path $ANDROID_HOME/tools/bin
 fish_add_path $ANDROID_HOME/platform-tools
+fish_vi_key_bindings

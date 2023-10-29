@@ -6,9 +6,9 @@ Before=sleep.target
 User=sparklez
 Type=forking
 Environment=DISPLAY=:0
-#ExecStartPre= -/usr/bin/pkill -u %u unison ; /usr/local/bin/music.sh stop
-ExecStart=/usr/bin/xautolock -locknow
-ExecStartPost=/usr/bin/sleep 1
+#ExecStartPre=/usr/bin/sleep 1
+ExecStart=/usr/bin/sleep 12
+#ExecStartPost=/usr/bin/sleep 1
 
 [Install]
 WantedBy=sleep.target

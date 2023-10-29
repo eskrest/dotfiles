@@ -40,18 +40,22 @@ keymap.set("i", "<Down>", "<Nop>")
 keymap.set("x", "p", 'pgvy')
 keymap.set("v", "<C-c>", '"+y')
 
+-- run the command that's selected in shell
+keymap.set("v", "<leader>rl", "\"ty:!<C-r>t<CR>")
+-- run the command that's selected in shell
+-- and read into the buffer
+keymap.set("v", "<leader>rL", "\"ty:r!<C-r>t<CR>")
+-- run the command that's on the current line in shell
+keymap.set("n", "<leader>rl", "<S-v>\"ty:!<C-r>t<CR>")
+-- run the command that's on the current line in shell
+-- and read into the buffer
+keymap.set("n", "<leader>rL", "<S-v>\"ty:r!<C-r>t<CR>")
+
 -- Plugins
 
 -- NERDTree
--- keymap.set('n', '<leader>n', ':NERDTreeToggle<CR>')
 keymap.set("n", "<leader>n", ":NvimTreeToggle<CR>")
 -- let NERDTreeShowHidden=1
-
--- Fuzzy Finder
--- keymap.set('n', '<C-p>', ':FuzzyOpen<CR>')
-
--- RipGrep
--- keymap.set('n', '<C-f>', ':Rg --hidden ')
 
 -- Not Git fugitive
 -- keymap.set('n', '<leader>g', ':G<CR>')

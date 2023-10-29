@@ -489,7 +489,7 @@ globalkeys = gears.table.join(
 		awful.util.spawn("nautilus")
 	end, { description = "open nautilus", group = "awesome" }),
 	awful.key({ altkey, "Control" }, "l", function()
-		awful.spawn.with_shell("dm-tool lock")
+		awful.spawn.with_shell("xautolock -locknow")
 	end, { description = "lock screen", group = "awesome" })
 )
 
@@ -750,5 +750,4 @@ beautiful.font = "JetBrains Mono Nerd Font"
 -- awful.spawn.with_shell("picom -cf --vsync -D 2 -i 0.7 --active-opacity 0.8")
 awful.spawn.with_shell("picom")
 awful.spawn.with_shell("xrandr -s 1920x1080")
--- automatic lock screen
-awful.spawn.with_shell("xautolock -time 20 -locker 'dm-tool lock'")
+awful.spawn.with_shell("light-locker --lock-after-screensaver=0 --lock-on-suspend")
