@@ -14,7 +14,7 @@ opt.backup = false
 
 opt.list = true
 opt.syntax = 'on'
-opt.listchars:append({tab = '| ', trail = '.'})
+opt.listchars:append({tab = '│ ', trail = '.'})
 opt.path:append({'.', '**'})
 opt.wildignore:append('**/node_modules/**')
 opt.tabstop = 2
