@@ -29,6 +29,8 @@ keymap.set("n", "<C-s>", function()
 	local file_name = vim.fn.input('save to: ', path)
 	vim.cmd(':w '..file_name)
 end)
+keymap.set("n", "vv", "<C-v>")
+
 keymap.set("i", "<C-h>", "<esc>gUiw`]a")
 keymap.set("i", "<C-l>", "<esc>guiw`]a")
 keymap.set("i", "<Left>", "<Nop>")
