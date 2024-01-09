@@ -489,7 +489,7 @@ globalkeys = gears.table.join(
 		awful.util.spawn("nautilus")
 	end, { description = "open nautilus", group = "awesome" }),
 	awful.key({ altkey, "Control" }, "l", function()
-		awful.spawn.with_shell("xautolock -locknow")
+		awful.spawn.with_shell("dm-tool lock")
 	end, { description = "lock screen", group = "awesome" })
 )
 
@@ -670,6 +670,7 @@ awful.rules.rules = {
 	-- { rule = { class = "Google" }, properties = { screen = 1, tag = "1" } },
 	{ rule = { class = "Thorium-browser" }, properties = { screen = 1, tag = "1" } },
 	{ rule = { class = "Firefox" }, properties = { screen = 1, tag = "5" } },
+	{ rule = { name = "Android Emulator - Pixel_6_API_30:5554" }, properties = { floating = true } },
 }
 -- }}}
 

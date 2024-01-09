@@ -41,7 +41,7 @@ cyan="#56B6C2"
 gray="#ABB2BF"
 white="#FFFFFF"
 
-# curtom prompt
+# custom prompt
 #
 delimiter=""
 prelimiter=""
@@ -74,9 +74,6 @@ setopt PROMPT_SUBST
 PROMPT='%B$(get_user)$(get_pwd)$(get_branch)%b'
 
 setopt histignorealldups sharehistory
-
-# Use emacs keybindings even if our EDITOR is set to vi
-bindkey -v
 
 # Keep 1000 lines of history within the shell and save it to ~/.zsh_history:
 HISTSIZE=1000
@@ -121,8 +118,8 @@ alias ..="cd .."
 alias df="df -h"
 alias dcd="docker-compose down"
 alias dcu="docker-compose up --build -d"
-alias gtp="cd /home/sparklez/docker-containers/7php/proj/palitra"
-alias gta="cd /home/sparklez/docker-containers/7php/proj/academy"
+alias cdp="cd /home/sparklez/docker-containers/7php/proj/palitra"
+alias cda="cd /home/sparklez/docker-containers/7php/proj/academy"
 
 # Environment variables
 export ANDROID_SDK_ROOT=~/Android/Sdk

@@ -53,7 +53,7 @@ gears.timer({
 		if capacity == nil then
 			return
 		end
-		if status == "full" then
+		if status == "full" or status == "not charging" then
 			if cord_connected then
 				status = "charging"
 			else

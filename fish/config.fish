@@ -8,6 +8,8 @@ alias dcu "docker-compose up --build -d"
 # alias ge "/home/sparklez/.local/share/lutris/runners/wine/lutris-GE-Proton8-5-x86_64/bin/wine"
 # alias gedbg "/home/sparklez/.local/share/lutris/runners/wine/lutris-GE-Proton8-5-x86_64/bin/winedbg"
 alias nv "~/Documents/./nvim.appimage"
+alias cdp "cd ~/docker-containers/7php/proj/palitra"
+alias cda "cd ~/docker-containers/7php/proj/academy"
 
 # Environment variables
 set -gx ANDROID_SDK_ROOT ~/Android/Sdk/

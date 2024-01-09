@@ -27,7 +27,8 @@ local icons = {
 }
 
 local update = function()
-	awful.spawn.easy_async({ "sh", "-c", "pactl get-sink-volume 0" }, function(out)
+	awful.spawn.easy_async({ "sh", "-c", "pactl get-sink-volume 1" }, function(out)
+	-- naughty.notify({ text = out })
 	local vol = out:match("(%d%d?%d?)%%")
 
 	if vol == nil then
@@ -43,7 +44,7 @@ local update = function()
 end
 
 local volume_up = function()
-	awful.spawn.easy_async("pactl -- set-sink-volume 0 +10%", function()
+	awful.spawn.easy_async("pactl -- set-sink-volume 1 +10%", function()
 		-- naughty.notify({ text = "volume +10%" })
 		update()
 	end)
@@ -51,7 +52,7 @@ end
 widget.volume_up = volume_up
 
 local volume_down = function()
-	awful.spawn.easy_async("pactl -- set-sink-volume 0 -10%", function()
+	awful.spawn.easy_async("pactl -- set-sink-volume 1 -10%", function()
 		-- naughty.notify({ text = "volume -10%" })
 		update()
 	end)
