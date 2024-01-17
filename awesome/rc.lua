@@ -431,7 +431,8 @@ globalkeys = gears.table.join(
 
 	-- Prompt
 	awful.key({ modkey }, "r", function()
-		awful.screen.focused().mypromptbox:run()
+		awful.spawn.with_shell("rofi -show run")
+		-- awful.screen.focused().mypromptbox:run()
 	end, { description = "run prompt", group = "launcher" }),
 
 	awful.key({ modkey }, "x", function()
@@ -482,12 +483,12 @@ globalkeys = gears.table.join(
 	end, { description = "num lock widget update", group = "awesome" }),
 
 	--------------------------------------
-	awful.key({ modkey }, "b", function()
-		awful.util.spawn("google-chrome")
-	end, { description = "open browser", group = "awesome" }),
-	awful.key({ modkey }, "n", function()
-		awful.util.spawn("nautilus")
-	end, { description = "open nautilus", group = "awesome" }),
+	-- awful.key({ modkey }, "b", function()
+	-- 	awful.util.spawn("google-chrome")
+	-- end, { description = "open browser", group = "awesome" }),
+	-- awful.key({ modkey }, "n", function()
+	-- 	awful.util.spawn("nautilus")
+	-- end, { description = "open nautilus", group = "awesome" }),
 	awful.key({ altkey, "Control" }, "l", function()
 		awful.spawn.with_shell("dm-tool lock")
 	end, { description = "lock screen", group = "awesome" })
