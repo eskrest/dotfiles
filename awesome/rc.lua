@@ -158,6 +158,8 @@ local brightness_widget = require("widgets/brightness")
 local mybrightnessbar = brightness_widget.widget
 local numlock_widget = require("widgets/numlock")
 local mynumbar = numlock_widget.widget
+local bluetooth_widget = require("widgets/bluetooth")
+local mybluetoothbar = bluetooth_widget.widget
 
 ------------ testing stuff ----------------
 ------------ testing stuff ----------------
@@ -301,6 +303,7 @@ awful.screen.connect_for_each_screen(function(s)
 			myhddbar,
 			mywifibar,
 			mysoundbar,
+			mybluetoothbar,
 			mybatterybar,
 			mytextclock,
 		},
@@ -750,6 +753,7 @@ beautiful.font = "JetBrains Mono Nerd Font"
 
 -- Autorun stuff
 -- awful.spawn.with_shell("picom -cf --vsync -D 2 -i 0.7 --active-opacity 0.8")
+awful.spawn.with_shell("mate-polkit")
 awful.spawn.with_shell("picom")
 awful.spawn.with_shell("xrandr -s 1920x1080")
 awful.spawn.with_shell("light-locker --lock-after-screensaver=0 --lock-on-suspend")
