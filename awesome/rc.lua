@@ -363,11 +363,15 @@ globalkeys = gears.table.join(
 	-- end, { description = "focus the previous screen", group = "screen" }),
 	-- awful.key({ modkey }, "u", awful.client.urgent.jumpto, { description = "jump to urgent client", group = "client" }),
 	awful.key({ altkey }, "Tab", function()
-		awful.client.focus.history.previous()
+		-- awful.client.focus.history.previous()
+		-- if client.focus then
+		-- 	client.focus:raise()
+		-- end
+		awful.client.focus.byidx(-1)
 		if client.focus then
 			client.focus:raise()
 		end
-	end, { description = "go back", group = "client" }),
+	end, { description = "Cycle between windows", group = "client" }),
 
 	-- Standard program
 	awful.key({ modkey }, "Return", function()
@@ -438,14 +442,14 @@ globalkeys = gears.table.join(
 		-- awful.screen.focused().mypromptbox:run()
 	end, { description = "run prompt", group = "launcher" }),
 
-	awful.key({ modkey }, "x", function()
-		awful.prompt.run({
-			prompt = "Run Lua code: ",
-			textbox = awful.screen.focused().mypromptbox.widget,
-			exe_callback = awful.util.eval,
-			history_path = awful.util.get_cache_dir() .. "/history_eval",
-		})
-	end, { description = "lua execute prompt", group = "awesome" }),
+	-- awful.key({ modkey }, "x", function()
+	-- 	awful.prompt.run({
+	-- 		prompt = "Run Lua code: ",
+	-- 		textbox = awful.screen.focused().mypromptbox.widget,
+	-- 		exe_callback = awful.util.eval,
+	-- 		history_path = awful.util.get_cache_dir() .. "/history_eval",
+	-- 	})
+	-- end, { description = "lua execute prompt", group = "awesome" }),
 	-- Menubar
 	-- awful.key({ modkey }, "p", function()
 	-- 	menubar.show()
@@ -498,6 +502,11 @@ globalkeys = gears.table.join(
 )
 
 clientkeys = gears.table.join(
+	awful.key({ "Shift" }, "F12", function(c)
+		naughty.notify({
+			text = "Shift+F12 is ont implemented"
+		})
+	end, { description = "Emulate Shift+Insert", group = "client" }),
 	awful.key({ modkey }, "f", function(c)
 		if c.fullscreen then
 			c.fullscreen = false
@@ -757,3 +766,4 @@ awful.spawn.with_shell("mate-polkit")
 awful.spawn.with_shell("picom")
 awful.spawn.with_shell("xrandr -s 1920x1080")
 awful.spawn.with_shell("light-locker --lock-after-screensaver=0 --lock-on-suspend")
+awful.spawn.with_shell("autocutsel")
