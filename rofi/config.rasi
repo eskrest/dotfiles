@@ -1,6 +1,6 @@
 configuration {
 modi: "window,run,ssh,combi";
-font: "JetBrains Mono Nerd Font 14";
+font: "JetBrains Mono Nerd Font 24";
 location: 2;
 yoffset: 6;
 /*	xoffset: 0;*/
