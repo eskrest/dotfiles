@@ -503,9 +503,7 @@ globalkeys = gears.table.join(
 
 clientkeys = gears.table.join(
 	awful.key({ "Shift" }, "F12", function(c)
-		naughty.notify({
-			text = "Shift+F12 is ont implemented"
-		})
+		naughty.notify({ text = "Shift+F12 is ont implemented" })
 	end, { description = "Emulate Shift+Insert", group = "client" }),
 	awful.key({ modkey }, "f", function(c)
 		if c.fullscreen then
@@ -762,8 +760,10 @@ beautiful.font = "JetBrains Mono Nerd Font"
 
 -- Autorun stuff
 -- awful.spawn.with_shell("picom -cf --vsync -D 2 -i 0.7 --active-opacity 0.8")
+-- custom key maps because weird keyboard
+awful.spawn.with_shell("xmodmap ~/.Xmodmap")
 awful.spawn.with_shell("mate-polkit")
 awful.spawn.with_shell("picom")
-awful.spawn.with_shell("xrandr -s 1920x1080")
+awful.spawn.with_shell("xrandr -s 3200x2000")
 awful.spawn.with_shell("light-locker --lock-after-screensaver=0 --lock-on-suspend")
 awful.spawn.with_shell("autocutsel")

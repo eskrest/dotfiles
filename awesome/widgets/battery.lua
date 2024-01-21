@@ -42,13 +42,13 @@ gears.timer({
 		-- awful.spawn.easy_async({ "sh", "-c", "acpi | sed -n 's/^.*, ([0-9]*)%/\1/p'" }, function(out)
 		-- 	battery.battery = out
 		-- end)
-		-- /sys/class/power_supply/BAT1/capacity = 98
-		-- /sys/class/power_supply/BAT1/status = Discharging | Charging | Full
-		capacity = read_file_first_line("/sys/class/power_supply/BAT1/capacity")
+		-- /sys/class/power_supply/BAT0/capacity = 98
+		-- /sys/class/power_supply/BAT0/status = Discharging | Charging | Full
+		capacity = read_file_first_line("/sys/class/power_supply/BAT0/capacity")
 		capacity = tonumber(capacity)
-		cord_connected = read_file_first_line("/sys/class/power_supply/ACAD/online")
+		cord_connected = read_file_first_line("/sys/class/power_supply/ADP1/online")
 		cord_connected = tonumber(cord_connected)
-		status = read_file_first_line("/sys/class/power_supply/BAT1/status")
+		status = read_file_first_line("/sys/class/power_supply/BAT0/status")
 		status = status:lower()
 		if capacity == nil then
 			return

@@ -74,7 +74,7 @@ local brightness_up = function()
 
 	local callback = function(brightness)
 		local br = math.min(brightness + 0.05, 1.0)
-		awful.spawn.easy_async({"sh", "-c", "xrandr --output eDP --brightness " ..br}, function()
+		awful.spawn.easy_async({"sh", "-c", "xrandr --output eDP-1 --brightness " ..br}, function()
 			update()
 		end)
 	end
@@ -87,7 +87,7 @@ local brightness_down = function()
 
 	local callback = function(brightness)
 		local br = math.max(brightness - 0.05, 0.1)
-		awful.spawn.easy_async({"sh", "-c", "xrandr --output eDP --brightness " ..br}, function()
+		awful.spawn.easy_async({"sh", "-c", "xrandr --output eDP-1 --brightness " ..br}, function()
 			update()
 		end)
 	end

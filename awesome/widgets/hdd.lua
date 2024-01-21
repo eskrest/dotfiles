@@ -24,10 +24,11 @@ gears.timer({
 	callback = function()
 		awful.spawn.easy_async({ "sh", "-c", "df -h | awk '{ print $1\" \"$5}'" }, function(out)
 			-- require("naughty").notify({ text = out })
-			nvme_use = out:match("^.*nvme0n1p2%s([%d]*)%%") or ""
-			ssd_use = out:match("^.*sda1%s([%d]*)%%") or ""
-			-- require("naughty").notify({ text = ssd_use })
-			hdd.capacity = icon .. nvme_use .. "% " .. icon .. ssd_use .. "%  "
+			system_nvme = out:match("^.*nvme0n1p2%s([%d]*)%%") or ""
+			data_nvme = out:match("^.*nvme0n1p3%s([%d]*)%%") or ""
+			-- data_nvme = out:match("^.*sda1%s([%d]*)%%") or ""
+			-- require("naughty").notify({ text = data_nvme })
+			hdd.capacity = icon .. system_nvme .. "% " .. icon .. data_nvme .. "%  "
 		end)
 	end,
 })
