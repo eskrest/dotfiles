@@ -323,6 +323,10 @@ root.buttons(gears.table.join(
 -- }}}
 
 -- {{{ Key bindings
+
+-- local function updateXmodmap()
+-- 	awful.spawn.with_shell("xmodmap ~/.Xmodmap")
+-- end
 globalkeys = gears.table.join(
 	awful.key({ modkey }, "s", hotkeys_popup.show_help, { description = "show help", group = "awesome" }),
 	-- awful.key({ modkey }, "Left", awful.tag.viewprev, { description = "view previous", group = "tag" }),
@@ -408,7 +412,6 @@ globalkeys = gears.table.join(
 	awful.key({ modkey }, "k", function()
 		awful.layout.inc(-1)
 	end, { description = "select previous", group = "layout" }),
-
 	-- this is a hack to switch the keyboard
 	-- layout on Super + space
 	awful.key({ modkey }, "space", function()
@@ -421,6 +424,7 @@ globalkeys = gears.table.join(
 					else
 						awful.spawn.with_shell("setxkbmap us")
 					end
+					-- updateXmodmap()
 				end
 			end,
 			stderr = function(line)
@@ -502,21 +506,28 @@ globalkeys = gears.table.join(
 	end, { description = "lock screen", group = "awesome" })
 )
 
+local toggleTouchpad = function()
+	awful.spawn.easy_async({ "sh", "-c", "xinput list-props 11 | grep 'Device Enabled'" }, function(out)
+		if out:match(":%s(%d)") == "0" then
+			awful.spawn.with_shell("xinput --enable 11")
+			naughty.notify({ text = "Touchpad on" })
+		else
+			awful.spawn.with_shell("xinput --disable 11")
+			naughty.notify({ text = "Touchpad off" })
+		end
+	end)
+end
+
 clientkeys = gears.table.join(
 	awful.key({ "Shift" }, "F12", function(c)
 		naughty.notify({ text = "Shift+F12 is ont implemented" })
 	end, { description = "Emulate Shift+Insert", group = "client" }),
 	-- use xev to get the key code
 	awful.key({ modkey, "Control" }, "#93", function(c)
-		awful.spawn.easy_async({ "sh", "-c", "xinput list-props 11 | grep 'Device Enabled'" }, function(out)
-			if out:match(":%s(%d)") == "0" then
-				awful.spawn.with_shell("xinput --enable 11")
-				naughty.notify({ text = "Touchpad on" })
-			else
-				awful.spawn.with_shell("xinput --disable 11")
-				naughty.notify({ text = "Touchpad off" })
-			end
-		end)
+		toggleTouchpad()
+	end, { description = "Disable touchpad", group = "client" }),
+	awful.key({ modkey  }, "F4", function(c)
+		toggleTouchpad()
 	end, { description = "Disable touchpad", group = "client" }),
 	awful.key({ modkey }, "f", function(c)
 		if c.fullscreen then
@@ -786,9 +797,10 @@ awful.screen.focused().padding = {left="1", top="0", right="-1"}
 -- Autorun stuff
 -- awful.spawn.with_shell("picom -cf --vsync -D 2 -i 0.7 --active-opacity 0.8")
 -- custom key maps because weird keyboard
--- awful.spawn.with_shell("xmodmap ~/.Xmodmap")
+-- updateXmodmap()
+toggleTouchpad()
 awful.spawn.with_shell("mate-polkit")
 awful.spawn.with_shell("picom")
 awful.spawn.with_shell("xrandr --output eDP-1 -s 3200x2000 --brightness 0.8")
 awful.spawn.with_shell("light-locker --lock-after-screensaver=0 --lock-on-suspend")
-awful.spawn.with_shell("autocutsel")
+-- awful.spawn.with_shell("autocutsel")
