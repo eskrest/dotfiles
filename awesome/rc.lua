@@ -116,7 +116,8 @@ awful.layout.layouts = {
 -- local menu_terminal = { "open terminal", terminal }
 
 -- set up gaps for gaps
-beautiful.useless_gap = 3
+beautiful.useless_gap = 0
+beautiful.gap_single_client = false
 
 -- if has_fdo then
 -- 	mymainmenu = freedesktop.menu.build({
@@ -505,6 +506,18 @@ clientkeys = gears.table.join(
 	awful.key({ "Shift" }, "F12", function(c)
 		naughty.notify({ text = "Shift+F12 is ont implemented" })
 	end, { description = "Emulate Shift+Insert", group = "client" }),
+	-- use xev to get the key code
+	awful.key({ modkey, "Control" }, "#93", function(c)
+		awful.spawn.easy_async({ "sh", "-c", "xinput list-props 11 | grep 'Device Enabled'" }, function(out)
+			if out:match(":%s(%d)") == "0" then
+				awful.spawn.with_shell("xinput --enable 11")
+				naughty.notify({ text = "Touchpad on" })
+			else
+				awful.spawn.with_shell("xinput --disable 11")
+				naughty.notify({ text = "Touchpad off" })
+			end
+		end)
+	end, { description = "Disable touchpad", group = "client" }),
 	awful.key({ modkey }, "f", function(c)
 		if c.fullscreen then
 			c.fullscreen = false
@@ -678,7 +691,7 @@ awful.rules.rules = {
 	{ rule_any = { type = { "normal", "dialog" } }, properties = { titlebars_enabled = false } },
 
 	-- Set Firefox to always map on the tag named "2" on screen 1.
-	-- { rule = { class = "Google" }, properties = { screen = 1, tag = "1" } },
+	{ rule = { class = "Google" }, properties = { screen = 1, tag = "1", fullscreen = true } },
 	{ rule = { class = "Thorium-browser" }, properties = { screen = 1, tag = "1" } },
 	{ rule = { class = "Firefox" }, properties = { screen = 1, tag = "5" } },
 	{ rule = { name = "Android Emulator - Pixel_6_API_30:5554" }, properties = { floating = true } },
@@ -749,6 +762,17 @@ end)
 client.connect_signal("unfocus", function(c)
 	c.border_color = beautiful.border_normal
 end)
+-- No borders when rearranging only 1 non-floating or maximized client
+screen.connect_signal("arrange", function (s)
+	local only_one = #s.tiled_clients == 1
+	for _, c in pairs(s.clients) do
+		if only_one and not c.floating or c.maximized then
+			c.border_width = 0
+		else
+			c.border_width = beautiful.border_width -- your border width
+		end
+	end
+end)
 
 -- theme stuff
 beautiful.systray_icon_spacing = 8
@@ -757,13 +781,14 @@ beautiful.notification_width = 500
 beautiful.notification_font = "JetBrains Mono Nerd Font"
 beautiful.taglist_font = 14
 beautiful.font = "JetBrains Mono Nerd Font"
+awful.screen.focused().padding = {left="1", top="0", right="-1"}
 
 -- Autorun stuff
 -- awful.spawn.with_shell("picom -cf --vsync -D 2 -i 0.7 --active-opacity 0.8")
 -- custom key maps because weird keyboard
-awful.spawn.with_shell("xmodmap ~/.Xmodmap")
+-- awful.spawn.with_shell("xmodmap ~/.Xmodmap")
 awful.spawn.with_shell("mate-polkit")
 awful.spawn.with_shell("picom")
-awful.spawn.with_shell("xrandr -s 3200x2000")
+awful.spawn.with_shell("xrandr --output eDP-1 -s 3200x2000 --brightness 0.8")
 awful.spawn.with_shell("light-locker --lock-after-screensaver=0 --lock-on-suspend")
 awful.spawn.with_shell("autocutsel")
