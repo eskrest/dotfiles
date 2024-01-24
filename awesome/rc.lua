@@ -116,7 +116,7 @@ awful.layout.layouts = {
 -- local menu_terminal = { "open terminal", terminal }
 
 -- set up gaps for gaps
-beautiful.useless_gap = 3
+beautiful.useless_gap = 0
 beautiful.gap_single_client = false
 
 -- if has_fdo then
@@ -532,17 +532,17 @@ clientkeys = gears.table.join(
 	awful.key({ modkey }, "f", function(c)
 		if c.fullscreen then
 			c.fullscreen = false
-			-- awful.titlebar.hide(c)
+                        c.border_width = beautiful.border_width
 			return
 		end
 		if not c.floating then
 			c.floating = true
-			-- awful.titlebar.show(c)
+                        c.border_width = beautiful.border_width
 			return
 		end
 		c.floating = false
 		c.fullscreen = true
-		-- awful.titlebar.hide(c)
+                c.border_width = 0
 		c:raise()
 	end, { description = "toggle between fullscreen and floating", group = "client" }),
 	awful.key({ modkey }, "q", function(c)
@@ -774,16 +774,18 @@ client.connect_signal("unfocus", function(c)
 	c.border_color = beautiful.border_normal
 end)
 -- No borders when rearranging only 1 non-floating or maximized client
-screen.connect_signal("arrange", function (s)
-	local only_one = #s.tiled_clients == 1
-	for _, c in pairs(s.clients) do
-		if only_one and not c.floating or c.maximized then
-			c.border_width = 0
-		else
-			c.border_width = beautiful.border_width -- your border width
-		end
-	end
-end)
+-- screen.connect_signal("arrange", function (s)
+--     local max = s.selected_tag.layout.name == "max"
+--     local only_one = #s.tiled_clients == 1 -- use tiled_clients so that other floating windows don't affect the count
+--     -- but iterate over clients instead of tiled_clients as tiled_clients doesn't include maximized windows
+--     for _, c in pairs(s.clients) do
+--         if (max or only_one) and not c.floating or c.maximized then
+--             c.border_width = 0
+--         else
+--             c.border_width = beautiful.border_width
+--         end
+--     end
+-- end)
 
 -- theme stuff
 beautiful.systray_icon_spacing = 8
