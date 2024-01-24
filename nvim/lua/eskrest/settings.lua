@@ -54,3 +54,11 @@ vim.api.nvim_create_autocmd("FileType", {
 -- 		vim.opt.filetype = 'typescriptreact'
 -- 	end
 -- })
+
+
+-- experimental
+-- add russian keymap 
+-- press Ctrl+^ to toggle
+vim.cmd("set keymap=russian-jcukenwin")
+vim.cmd("set iminsert=0")
+vim.cmd("set imsearch=0")
