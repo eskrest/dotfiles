@@ -116,7 +116,7 @@ awful.layout.layouts = {
 -- local menu_terminal = { "open terminal", terminal }
 
 -- set up gaps for gaps
-beautiful.useless_gap = 0
+beautiful.useless_gap = 3
 beautiful.gap_single_client = false
 
 -- if has_fdo then
@@ -507,12 +507,12 @@ globalkeys = gears.table.join(
 )
 
 local toggleTouchpad = function()
-	awful.spawn.easy_async({ "sh", "-c", "xinput list-props 11 | grep 'Device Enabled'" }, function(out)
+	awful.spawn.easy_async({ "sh", "-c", "xinput list-props 12 | grep 'Device Enabled'" }, function(out)
 		if out:match(":%s(%d)") == "0" then
-			awful.spawn.with_shell("xinput --enable 11")
+			awful.spawn.with_shell("xinput --enable 12")
 			naughty.notify({ text = "Touchpad on" })
 		else
-			awful.spawn.with_shell("xinput --disable 11")
+			awful.spawn.with_shell("xinput --disable 12")
 			naughty.notify({ text = "Touchpad off" })
 		end
 	end)
@@ -792,7 +792,7 @@ beautiful.notification_width = 500
 beautiful.notification_font = "JetBrains Mono Nerd Font"
 beautiful.taglist_font = 14
 beautiful.font = "JetBrains Mono Nerd Font"
-awful.screen.focused().padding = {left="1", top="0", right="-1"}
+-- awful.screen.focused().padding = {left="1", top="0", right="-1"}
 
 -- Autorun stuff
 -- awful.spawn.with_shell("picom -cf --vsync -D 2 -i 0.7 --active-opacity 0.8")
