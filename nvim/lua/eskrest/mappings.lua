@@ -33,7 +33,7 @@ end)
 
 keymap.set("i", "<C-h>", "<esc>gUiw`]a")
 keymap.set("i", "<C-l>", "<esc>guiw`]a")
-keymap.set("i", "<C-v>", '<C-r>+')
+keymap.set({"i", "c"}, "<C-v>", '<C-r>+')
 keymap.set("i", "<Left>", "<Nop>")
 keymap.set("i", "<Right>", "<Nop>")
 keymap.set("i", "<Up>", "<Nop>")
