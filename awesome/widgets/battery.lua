@@ -22,13 +22,24 @@ end
 -- Create a widget and update its content using the output of a shell
 -- command every 10 seconds:
 local battery = wibox.widget({
-	text = "󱉝 ",
-	font = "14",
+	{
+		id = "icon_text",
+		text = "󱉝 ",
+		font = "14",
+		widget = wibox.widget.textbox,
+	},
+	{
+		id = "capacity_text",
+		text = "",
+		widget = wibox.widget.textbox,
+	},
 	widget = wibox.widget.textbox,
-	set_battery = function(self, val)
-		self.text = val
-		-- self.textbar.text = tonumber(val)
-		-- self.mypb.value = tonumber(val)
+	layout = wibox.layout.align.horizontal,
+	set_icon = function(self, val)
+		self.icon_text.text = val
+	end,
+	set_capacity = function(self, val)
+		self.capacity_text.text = val
 	end,
 })
 
@@ -60,8 +71,6 @@ gears.timer({
 				status = "discharging"
 			end
 		end
-		-- 10: 󰁺, 20: 󰁻, 30: 󰁼, 40: 󰁽, 50: 󰁾, 60: 󰁿, 70: 󰂀, 80: 󰂁, 90: 󰂂, 100: 󰁹
-		-- 10: 󰢜, 20: 󰂆, 30: 󰂇, 40: 󰂈, 50: 󰢝, 60: 󰂉, 70: 󰢞, 80: 󰂊, 90: 󰂋, 100: 󰂅
 		local battery_statuses = {
 			charging = {
 				"󰢟 ", "󰢜 ", "󰂆 ", "󰂇 ", "󰂈 ", "󰢝 ", "󰂉 ", "󰢞 ", "󰂊 ", "󰂋 ", "󰂅 "
@@ -72,8 +81,8 @@ gears.timer({
 		}
 		icon_index = math.floor(capacity / 10) + 1
 		icon = battery_statuses[status][icon_index]
-		-- battery_status = capacity
-		battery.battery = icon -- .. battery_status
+		battery.icon = icon -- .. battery_status
+		battery.capacity = tostring(capacity) .. "% "
 	end,
 })
 

@@ -60,6 +60,7 @@ beautiful.init("~/.config/awesome/themes/default/theme.lua")
 
 -- This is used later as the default terminal and editor to run.
 terminal = "alacritty"
+-- terminal = "terminator"
 editor = os.getenv("EDITOR") or "vim"
 editor_cmd = terminal .. " -e " .. editor
 
@@ -116,7 +117,7 @@ awful.layout.layouts = {
 -- local menu_terminal = { "open terminal", terminal }
 
 -- set up gaps for gaps
-beautiful.useless_gap = 0
+beautiful.useless_gap = 10
 beautiful.gap_single_client = false
 
 -- if has_fdo then
@@ -379,7 +380,7 @@ globalkeys = gears.table.join(
 	end, { description = "Cycle between windows", group = "client" }),
 
 	-- Standard program
-	awful.key({ modkey }, "Return", function()
+	awful.key({ modkey }, "KP_Enter", function()
 		awful.spawn(terminal)
 	end, { description = "open a terminal", group = "launcher" }),
 	awful.key({}, "Print", function()
@@ -519,9 +520,6 @@ local toggleTouchpad = function()
 end
 
 clientkeys = gears.table.join(
-	awful.key({ "Shift" }, "F12", function(c)
-		naughty.notify({ text = "Shift+F12 is ont implemented" })
-	end, { description = "Emulate Shift+Insert", group = "client" }),
 	-- use xev to get the key code
 	awful.key({ modkey, "Control" }, "#93", function(c)
 		toggleTouchpad()
@@ -532,17 +530,17 @@ clientkeys = gears.table.join(
 	awful.key({ modkey }, "f", function(c)
 		if c.fullscreen then
 			c.fullscreen = false
-                        c.border_width = beautiful.border_width
+			c.border_width = beautiful.border_width
 			return
 		end
 		if not c.floating then
 			c.floating = true
-                        c.border_width = beautiful.border_width
+			c.border_width = beautiful.border_width
 			return
 		end
 		c.floating = false
 		c.fullscreen = true
-                c.border_width = 0
+		c.border_width = 0
 		c:raise()
 	end, { description = "toggle between fullscreen and floating", group = "client" }),
 	awful.key({ modkey }, "q", function(c)
@@ -794,15 +792,15 @@ beautiful.notification_width = 500
 beautiful.notification_font = "JetBrains Mono Nerd Font"
 beautiful.taglist_font = 14
 beautiful.font = "JetBrains Mono Nerd Font"
--- awful.screen.focused().padding = {left="1", top="0", right="-1"}
+awful.screen.focused().padding = {left="20", top="10", right="10", bottom="10"}
 
 -- Autorun stuff
 -- awful.spawn.with_shell("picom -cf --vsync -D 2 -i 0.7 --active-opacity 0.8")
 -- custom key maps because weird keyboard
 -- updateXmodmap()
-toggleTouchpad()
+-- toggleTouchpad()
 awful.spawn.with_shell("mate-polkit")
 awful.spawn.with_shell("picom")
-awful.spawn.with_shell("xrandr --output eDP-1 -s 3200x2000 --brightness 0.8")
+awful.spawn.with_shell("xrandr --output eDP-1 -s 3200x2000 --brightness 0.75")
 awful.spawn.with_shell("light-locker --lock-after-screensaver=0 --lock-on-suspend")
 -- awful.spawn.with_shell("autocutsel")
