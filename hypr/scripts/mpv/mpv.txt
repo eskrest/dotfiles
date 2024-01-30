@@ -1,0 +1,6 @@
+echo '{ "command": ["set_property", "pause", true] }' | socat - /tmp/mpvsocket
+echo '{ "command": ["set_property", "path"] }' | socat - /tmp/mpvsocket
+echo '{ "command": ["get_property", "playlist"] }' | socat - /tmp/mpvsocket
+echo '{ "command": ["get_property", "filename"] }' | socat - /tmp/mpvsocket
+
+mpv --list-properties | vim
