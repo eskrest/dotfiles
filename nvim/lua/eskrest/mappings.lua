@@ -56,8 +56,10 @@ keymap.set("n", "<leader>rL", "<S-v>\"ty:r!<C-r>t<CR>")
 
 -- Plugins
 
--- NERDTree
-keymap.set("n", "<leader>n", ":NvimTreeToggle<CR>")
+-- NeoTree
+keymap.set("n", "<leader>n", ":Neotree reveal toggle<CR>")
+keymap.set("n", "<leader>m", ":Neotree git_status toggle<CR>")
+keymap.set("n", "<leader>b", ":Neotree buffers toggle<CR>")
 -- let NERDTreeShowHidden=1
 
 -- Not Git fugitive
