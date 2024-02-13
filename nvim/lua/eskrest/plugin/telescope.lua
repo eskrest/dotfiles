@@ -1,6 +1,12 @@
-local M = {}
+local M = {
+	"nvim-telescope/telescope.nvim",
+	dependencies = {
+		"nvim-lua/plenary.nvim",
+		"sharkdp/fd",
+	},
+}
 
-M.setup = function()
+function M.config()
 	local loaded, telescope = pcall(require, "telescope")
 
 	if not loaded then
@@ -28,7 +34,11 @@ M.setup = function()
 	local builtin = require("telescope.builtin")
 	-- local actions = require('telescope.actions')
 	vim.keymap.set("n", "<C-p>", function()
-		builtin.find_files({ hidden = true, preview = false, find_command = { "rg", "--files", "--hidden", "--glob", "!**/.git/*" } })
+		builtin.find_files({
+			hidden = true,
+			preview = false,
+			find_command = { "rg", "--files", "--hidden", "--glob", "!**/.git/*" },
+		})
 	end, {})
 	vim.keymap.set("n", "<C-f>", function()
 		builtin.grep_string({ search = vim.fn.input("Grep > ") })

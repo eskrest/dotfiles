@@ -1,7 +1,14 @@
-local M = {}
+local M = {
+	"neovim/nvim-lspconfig",
+	dependencies = {
+		"williamboman/mason.nvim",
+		"williamboman/mason-lspconfig.nvim",
+		"folke/neodev.nvim",
+	},
+}
 
-M.setup = function()
-	local loaded, lspconfig = pcall(require, 'lspconfig')
+function M.config()
+	local loaded, lspconfig = pcall(require, "lspconfig")
 
 	if not loaded then
 		return
@@ -13,24 +20,18 @@ M.setup = function()
 		vim.tbl_deep_extend("force", lsp_defaults.capabilities, require("cmp_nvim_lsp").default_capabilities())
 
 	lsp_defaults.on_attach = function(client, bufnr)
-		local opts = { buffer = bufnr }
+		local opts = { buffer = bufnr, noremap = true }
 
 		vim.keymap.set("n", "K", function()
 			vim.lsp.buf.hover()
 		end, opts)
 
-		-- gd works like shit in vue files
-		-- so I disable it there
-		-- if vim.bo.filetype == "vue" then
-		-- 	print("lsp definition disabled")
-		-- else
-		-- 	print("lsp definition disabled")
-		-- 	-- vim.keymap.set('n', 'gd', function() vim.lsp.buf.definition() end, opts)
-		-- end
 		-- vim.keymap.set('n', 'gD', function() vim.lsp.buf.declaration() end, opts)
 		-- vim.keymap.set('n', 'gi', function() vim.lsp.buf.implementation() end, opts)
 		-- vim.keymap.set('n', 'go', function() vim.lsp.buf.type_definition() end, opts)
-		vim.keymap.set('n', '<leader>gd', function() vim.lsp.buf.definition() end, opts)
+		vim.keymap.set("n", "<leader>gd", function()
+			vim.lsp.buf.definition()
+		end, opts)
 		vim.keymap.set("n", "gr", function()
 			vim.lsp.buf.references()
 		end, opts)
@@ -49,7 +50,7 @@ M.setup = function()
 		lspconfig[server].setup({})
 	end
 
-	local loaded, mason = pcall(require, 'mason')
+	local loaded, mason = pcall(require, "mason")
 
 	if not loaded then
 		return
@@ -57,7 +58,7 @@ M.setup = function()
 
 	mason.setup({})
 
-	local loaded, masonLspconfig = pcall(require, 'mason-lspconfig')
+	local loaded, masonLspconfig = pcall(require, "mason-lspconfig")
 
 	if not loaded then
 		return
@@ -79,23 +80,15 @@ M.setup = function()
 		-- on_attach = on_attach,
 		capabilities = capabilities,
 		filetypes = { "html", "javascriptreact", "vue", "php" },
-		init_options = {
-			html = {
-				options = {
-					-- For possible options, see: https://github.com/emmetio/emmet/blob/master/src/config.ts#L79-L267
-					-- ["bem.enabled"] = true,
-				},
-			},
-		},
 	})
 
 	-- install insured formatters for mason
 	local ensure_installed_formatters = {
-		'prettier',
-		'stylua',
+		"prettier",
+		"stylua",
 	}
 
-	local loaded, masonRegistry = pcall(require, 'mason-registry')
+	local loaded, masonRegistry = pcall(require, "mason-registry")
 	if not loaded then
 		return
 	end
@@ -110,7 +103,7 @@ M.setup = function()
 			end
 		end
 		if not found then
-			pcall(vim.cmd, 'MasonInstall ' .. item)
+			pcall(vim.cmd, "MasonInstall " .. item)
 		end
 	end
 end

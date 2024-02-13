@@ -1,7 +1,9 @@
-local M = {}
+local M = {
+	"nvim-lualine/lualine.nvim",
+}
 
-M.setup = function()
-	local loaded, lualine = pcall(require, 'lualine')
+function M.config()
+	local loaded, lualine = pcall(require, "lualine")
 
 	if not loaded then
 		return

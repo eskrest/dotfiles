@@ -1,7 +1,45 @@
-local M = {}
+local M = {
+	"hrsh7th/nvim-cmp",
+	event = "InsertEnter",
+	dependencies = {
+		{
+			"hrsh7th/cmp-nvim-lsp",
+			event = "InsertEnter",
+		},
+		{
+			"hrsh7th/cmp-buffer",
+			event = "InsertEnter",
+		},
+		{
+			"hrsh7th/cmp-path",
+			event = "InsertEnter",
+		},
+		{
+			"hrsh7th/cmp-cmdline",
+			event = "InsertEnter",
+		},
+		{
+			"saadparwaiz1/cmp_luasnip",
+			event = "InsertEnter",
+		},
+		{
+			"L3MON4D3/LuaSnip",
+			event = "InsertEnter",
+		},
+		{
+			"hrsh7th/cmp-nvim-lua",
+		},
+	},
+}
 
-M.setup = function()
-	local loaded, cmp = pcall(require, 'cmp')
+function M.config()
+	local loaded, cmp = pcall(require, "cmp")
+
+	if not loaded then
+		return
+	end
+
+	local loaded, luasnip = pcall(require, "luasnip")
 
 	if not loaded then
 		return
@@ -9,37 +47,40 @@ M.setup = function()
 
 	cmp.setup({
 		sources = {
-			-- list of sources
-			-- https://github.com/hrsh7th/nvim-cmp/wiki/List-of-sources
 			{ name = "buffer" },
 			{ name = "nvim_lua" },
 			{ name = "nvim_lsp" },
 			{ name = "path" },
 			{ name = "luasnip" },
+			{ name = "calc" },
+			{ name = "cmp_tabnine" },
 		},
 		mapping = cmp.mapping.preset.insert({
-			-- Enter key confirms completion item
 			["<CR>"] = cmp.mapping.confirm({ select = false }),
-			-- TODO
-			-- read :help ins-completion
-			["<Tab>"] = function(fallback)
+			["<Tab>"] = cmp.mapping(function(fallback)
 				if cmp.visible() then
 					cmp.select_next_item()
+				elseif luasnip.expandable() then
+					luasnip.expand()
+				-- elseif luasnip.expand_or_jumpable() then
+				-- 	luasnip.expand_or_jump()
 				else
 					fallback()
 				end
-			end,
-			["<S-Tab>"] = function(fallback)
+			end, { "i", "s" }),
+			["<S-Tab>"] = cmp.mapping(function(fallback)
 				if cmp.visible() then
 					cmp.select_prev_item()
+				-- elseif luasnip.jumpable(-1) then
+				-- 	luasnip.jump(-1)
 				else
 					fallback()
 				end
-			end,
+			end, { "i", "s" }),
 		}),
 		snippet = {
 			expand = function(args)
-				local loaded, luasnip = pcall(require, 'luasnip')
+				local loaded, luasnip = pcall(require, "luasnip")
 
 				if not loaded then
 					return
@@ -48,24 +89,23 @@ M.setup = function()
 				luasnip.lsp_expand(args.body)
 			end,
 		},
+		confirm_opts = {
+			behavior = cmp.ConfirmBehavior.Replace,
+			select = false,
+		},
+		window = {
+			completion = {
+				border = "rounded",
+				scrollbar = false,
+			},
+			documentation = {
+				border = "rounded",
+			},
+		},
 		experimental = {
-			-- doesn't work
-			-- native_menu = false,
 			ghost_text = true,
 		},
 	})
-
-	-- enable some sources on a file type
-	-- vim.cmd [[
-	-- 	autogroup DadbotSql
-	-- 		au!
-	-- 		autocmd FileType sql,mysql lua require('cmp').setup.buffer { sources = { { name = 'vim-dadbod-completion' } } }
-	-- 	autogroup end
-	-- ]]
-	--
-	--
-	-- disable some sources on a file type
-	-- autocmd FileType java lua require('cmp').setup.buffer { enabled = false }
 end
 
 return M

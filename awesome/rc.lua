@@ -19,7 +19,7 @@ local hotkeys_popup = require("awful.hotkeys_popup")
 require("awful.hotkeys_popup.keys")
 
 -- Load Debian menu entries
-local debian = require("debian.menu")
+-- local debian = require("debian.menu")
 -- local has_fdo, freedesktop = pcall(require, "freedesktop")
 
 -- {{{ Error handling
@@ -381,6 +381,9 @@ globalkeys = gears.table.join(
 
 	-- Standard program
 	awful.key({ modkey }, "KP_Enter", function()
+		awful.spawn(terminal)
+	end, { description = "open a terminal", group = "launcher" }),
+	awful.key({ modkey }, "Return", function()
 		awful.spawn(terminal)
 	end, { description = "open a terminal", group = "launcher" }),
 	awful.key({}, "Print", function()
@@ -795,12 +798,7 @@ beautiful.font = "JetBrains Mono Nerd Font"
 awful.screen.focused().padding = {left="20", top="10", right="10", bottom="10"}
 
 -- Autorun stuff
--- awful.spawn.with_shell("picom -cf --vsync -D 2 -i 0.7 --active-opacity 0.8")
--- custom key maps because weird keyboard
--- updateXmodmap()
--- toggleTouchpad()
 awful.spawn.with_shell("mate-polkit")
 awful.spawn.with_shell("picom")
 awful.spawn.with_shell("xrandr --output eDP-1 -s 3200x2000 --brightness 0.75")
 awful.spawn.with_shell("light-locker --lock-after-screensaver=0 --lock-on-suspend")
--- awful.spawn.with_shell("autocutsel")

@@ -3,6 +3,12 @@ P = function(v)
 	return v
 end
 
+LAZY_PLUGIN_SPEC = {}
+
+function spec(item)
+	table.insert(LAZY_PLUGIN_SPEC, { import = item })
+end
+
 -- example = function()
 -- 	P(vim.api)
 -- end
@@ -54,10 +60,7 @@ end
 -- 	print('here is your input: ', text)
 -- end, {})
 
-vim.api.nvim_create_user_command('RemoveAllSemicolons', function()
-	pcall(
-		vim.cmd,
-		'%s/;//g'	
-	)
-	vim.cmd('noh')
+vim.api.nvim_create_user_command("RemoveAllSemicolons", function()
+	pcall(vim.cmd, "%s/;//g")
+	vim.cmd("noh")
 end, {})

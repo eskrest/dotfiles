@@ -1,63 +1,47 @@
-local opt = vim.opt
-local g = vim.g
-
 -- vim.cmd('colorscheme onedark')
 -- vim.cmd('colorscheme ron')
+-- vim.opt.termguicolors = true
+vim.g.loaded_netrw = 1
+vim.g.loaded_netrwPlugin = 1
+vim.opt.undodir = vim.fn.expand("~/.config/nvim/undodir")
+vim.opt.swapfile = false
+vim.opt.undofile = true
+vim.opt.backup = false
+-- this would make that y, p, C, etc.
+-- put the thing into the system clipboard
+-- vim.opt.clipboard = 'unnamedplus'
+vim.opt.list = true
+vim.opt.syntax = "on"
+vim.opt.pumheight = 10 -- pop up menu height
+vim.opt.pumblend = 10
+vim.opt.listchars:append({ tab = "│ ", trail = "." })
+vim.opt.path:append({ ".", "**" })
+vim.opt.wildignore:append("**/node_modules/**")
+vim.opt.tabstop = 2
+vim.opt.shiftwidth = 2
+vim.opt.smartindent = true
+vim.opt.nu = true
+vim.opt.relativenumber = true
+vim.opt.foldmethod = "indent"
+vim.opt.foldenable = false
+vim.opt.mouse = "a"
+vim.opt.cursorline = true
+vim.opt.cursorcolumn = true
+vim.opt.wrap = true
+vim.opt.scrolloff = 1
+vim.opt.signcolumn = "yes"
+vim.opt.updatetime = 50
+vim.opt.autoindent = true
+vim.opt.ignorecase = true
+-- vim.opt.iskeyword = '@,48-57,192-255'
+vim.opt.guifont = "monospace:h17" -- the font used in graphical neovim applications
 
--- opt.termguicolors = true
-g.loaded_netrw = 1
-g.loaded_netrwPlugin = 1
-opt.undodir = vim.fn.expand('~/.config/nvim/undodir')
-opt.swapfile = false
-opt.undofile = true
-opt.backup = false
-
-opt.list = true
-opt.syntax = 'on'
-opt.listchars:append({tab = '│ ', trail = '.'})
-opt.path:append({'.', '**'})
-opt.wildignore:append('**/node_modules/**')
-opt.tabstop = 2
-opt.shiftwidth = 2
-opt.smartindent = true
-opt.nu = true
-opt.relativenumber = true
-opt.foldmethod = 'indent'
-opt.foldenable = false
-opt.mouse = 'a'
-opt.cursorline = true
-opt.cursorcolumn = true
-opt.wrap = true
-opt.scrolloff = 1
-opt.signcolumn = "yes"
-opt.updatetime = 50
-opt.autoindent = true
-opt.ignorecase = true
--- opt.iskeyword = '@,48-57,192-255'
-
-vim.api.nvim_set_hl(0, 'CursorLine', { cterm=none, ctermbg=237, ctermfg=none })
-vim.api.nvim_set_hl(0, 'Normal', { bg=none })
-vim.api.nvim_set_hl(0, 'EndOfBuffer', { bg=none })
+vim.api.nvim_set_hl(0, "CursorLine", { cterm = none, ctermbg = 237, ctermfg = none })
+vim.api.nvim_set_hl(0, "Normal", { bg = none })
+vim.api.nvim_set_hl(0, "EndOfBuffer", { bg = none })
 -- vim.api.nvim_set_hl(0, 'NormalFloat', { bg=none })
-
-vim.api.nvim_create_autocmd("FileType", {
-	pattern = 'php',
-	callback = function()
-		vim.opt.autoindent = true
-		vim.opt.filetype = 'html'
-	end
-})
-
--- vim.api.nvim_create_autocmd({'BufNewFile', 'BufRead'}, {
--- 	pattern = '*.tsx',
--- 	callback = function()
--- 		vim.opt.filetype = 'typescriptreact'
--- 	end
--- })
-
-
 -- experimental
--- add russian keymap 
+-- add russian keymap
 -- press Ctrl+^ to toggle
 vim.cmd("set keymap=russian-jcukenwin")
 vim.cmd("set iminsert=0")
