@@ -1,10 +1,10 @@
-vim.api.nvim_create_autocmd("FileType", {
-	pattern = "php",
-	callback = function()
-		vim.opt.autoindent = true
-		vim.opt.filetype = "html"
-	end,
-})
+-- vim.api.nvim_create_autocmd("FileType", {
+-- 	pattern = "php",
+-- 	callback = function()
+-- 		vim.opt.autoindent = true
+-- 		vim.opt.filetype = "html"
+-- 	end,
+-- })
 
 -- vim.api.nvim_create_autocmd({'BufNewFile', 'BufRead'}, {
 -- 	pattern = '*.tsx',

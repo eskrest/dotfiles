@@ -5,10 +5,10 @@
     // "width": 1280, // Waybar width
     "spacing": 4, // Gaps between modules (4px)
     // Choose the order of the modules
-    // "modules-left": ["sway/workspaces", "sway/mode", "sway/scratchpad", "custom/media"],
+    // "modules-left": ["hyprland/workspaces", "sway/mode", "sway/scratchpad", "custom/media"],
     // "modules-center": ["sway/window"],
-    // "modules-right": ["mpd", "idle_inhibitor", "pulseaudio", "network", "cpu", "memory", "temperature", "backlight", "keyboard-state", "sway/language", "battery", "battery#bat2", "clock", "tray"],
-    "modules-right": ["pulseaudio", "network", "backlight", "battery", "clock"],
+    // "modules-right": ["mpd", "idle_inhibitor", "pulseaudio", "network", "cpu", "memory", "temperature", "backlight", "keyboard-state", "hyprland/language", "battery", "battery#bat2", "clock", "tray"],
+    "modules-right": ["pulseaudio", "hyprland/language", "network", "backlight", "battery", "clock"],
     // Modules configuration
     // "sway/workspaces": {
     //     "disable-scroll": true,
@@ -37,6 +37,9 @@
     },
     "sway/mode": {
         "format": "<span style=\"italic\">{}</span>"
+    },
+    "hyprland/language": {
+      "format": "{short}"
     },
     "sway/scratchpad": {
         "format": "{icon} {count}",
@@ -85,6 +88,7 @@
     "clock": {
         // "timezone": "America/New_York",
         "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>",
+        "format": "{:%a, %d %b %Y, %H:%M}",
         "format-alt": "{:%Y-%m-%d}"
     },
     "cpu": {

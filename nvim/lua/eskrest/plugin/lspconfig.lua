@@ -82,6 +82,20 @@ function M.config()
 		filetypes = { "html", "javascriptreact", "vue", "php" },
 	})
 
+	lspconfig.intelephense.setup({
+		capabilities = capabilities,
+		filetypes = { "php" },
+		settings = {
+			intelephense = {
+				diagnostics = {
+					enable = false,
+					-- undefinedConstants = false,
+					-- undefinedFunctions = false,
+				}
+			},
+		},
+	})
+
 	-- install insured formatters for mason
 	local ensure_installed_formatters = {
 		"prettier",

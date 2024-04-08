@@ -1,22 +1,25 @@
-#!/bin/sh
+#!/usr/bin/env bash
 
-# Set device to be toggled
-HYPRLAND_DEVICE="htix5288:00-0911:5288-touchpad"
-HYPRLAND_VARIABLE="device:$HYPRLAND_DEVICE:enabled"
+export ENABLE_TOUCHPAD="$XDG_RUNTIME_DIR/enable.touchpad"
 
-if [ -z "$XDG_RUNTIME_DIR" ]; then
-	  export XDG_RUNTIME_DIR=/run/user/$(id -u)
-fi
+enable_touchpad() {
+	printf "true" >"$ENABLE_TOUCHPAD"
+	notify-send -u normal "Enabling Tuchpad"
+	hyprctl keyword '$ENABLE_TOUCHPAD' "true" -r
+}
 
-# Check if device is currently enabled (1 = enabled, 0 = disabled)
-DEVICE="$(hyprctl getoption $HYPRLAND_VARIABLE | grep 'int: 1')"
+disable_touchpad() {
+	printf "false" >"$ENABLE_TOUCHPAD"
+	notify-send -u normal "Disabling Tuchpad"
+	hyprctl keyword '$ENABLE_TOUCHPAD' "false" -r
+}
 
-if [ -z "$DEVICE" ]; then
-	# if the device is disabled, then enable
-	notify-send -u normal "Enabling Touchpad"
-	hyprctl keyword $HYPRLAND_VARIABLE true
+if ! [ -f "$ENABLE_TOUCHPAD" ]; then
+	enable_touchpad
 else
-	# if the device is enabled, then disable
-	notify-send -u normal "Disabling Touchpad"
-	hyprctl keyword $HYPRLAND_VARIABLE false
+	if [ $(cat "$ENABLE_TOUCHPAD") = "true" ]; then
+		disable_touchpad
+	elif [ $(cat "$ENABLE_TOUCHPAD") = "false" ]; then
+		enable_touchpad
 	fi
+fi

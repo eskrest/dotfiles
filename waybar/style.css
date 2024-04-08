@@ -1,6 +1,6 @@
 * {
     /* `otf-font-awesome` is required to be installed for icons */
-    font-family: FontAwesome, Roboto, Helvetica, Arial, sans-serif;
+    font-family: "JetBrains Mono Nerd Font", FontAwesome, Roboto, Helvetica, Arial, sans-serif;
     font-size: 13px;
 }
 
@@ -87,6 +87,7 @@ button:hover {
 #mode,
 #idle_inhibitor,
 #scratchpad,
+#language,
 #mpd {
     padding: 5px 10px;
     margin: 10px;
@@ -250,11 +251,13 @@ label:focus {
 }
 
 #language {
-    background: #00b093;
+    background-color: #00b093;
+  /*
     color: #740864;
     padding: 0 5px;
     margin: 0 5px;
     min-width: 16px;
+  */
 }
 
 #keyboard-state {
