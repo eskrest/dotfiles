@@ -1,10 +1,10 @@
--- vim.api.nvim_create_autocmd("FileType", {
--- 	pattern = "php",
--- 	callback = function()
--- 		vim.opt.autoindent = true
--- 		vim.opt.filetype = "html"
--- 	end,
--- })
+-- fix for sass files indentation
+vim.api.nvim_create_autocmd("FileType", {
+	pattern = "sass",
+	callback = function()
+		vim.opt.shiftwidth = 4
+	end,
+})
 
 -- vim.api.nvim_create_autocmd({'BufNewFile', 'BufRead'}, {
 -- 	pattern = '*.tsx',

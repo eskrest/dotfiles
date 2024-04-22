@@ -59,7 +59,7 @@ end
 beautiful.init("~/.config/awesome/themes/default/theme.lua")
 
 -- This is used later as the default terminal and editor to run.
-terminal = "alacritty"
+terminal = "kitty"
 -- terminal = "terminator"
 editor = os.getenv("EDITOR") or "vim"
 editor_cmd = terminal .. " -e " .. editor
@@ -368,16 +368,13 @@ globalkeys = gears.table.join(
 	-- 	awful.screen.focus_relative(-1)
 	-- end, { description = "focus the previous screen", group = "screen" }),
 	-- awful.key({ modkey }, "u", awful.client.urgent.jumpto, { description = "jump to urgent client", group = "client" }),
-	awful.key({ altkey }, "Tab", function()
-		-- awful.client.focus.history.previous()
-		-- if client.focus then
-		-- 	client.focus:raise()
-		-- end
-		awful.client.focus.byidx(-1)
-		if client.focus then
-			client.focus:raise()
-		end
-	end, { description = "Cycle between windows", group = "client" }),
+    -- ---------------------
+	-- awful.key({ altkey }, "Tab", function()
+	-- 	awful.client.focus.byidx(-1)
+	-- 	if client.focus then
+	-- 		client.focus:raise()
+	-- 	end
+	-- end, { description = "Cycle between windows", group = "client" }),
 
 	-- Standard program
 	awful.key({ modkey }, "KP_Enter", function()
@@ -511,12 +508,12 @@ globalkeys = gears.table.join(
 )
 
 local toggleTouchpad = function()
-	awful.spawn.easy_async({ "sh", "-c", "xinput list-props 12 | grep 'Device Enabled'" }, function(out)
+	awful.spawn.easy_async({ "sh", "-c", "xinput list-props 11 | grep 'Device Enabled'" }, function(out)
 		if out:match(":%s(%d)") == "0" then
-			awful.spawn.with_shell("xinput --enable 12")
+			awful.spawn.with_shell("xinput --enable 11")
 			naughty.notify({ text = "Touchpad on" })
 		else
-			awful.spawn.with_shell("xinput --disable 12")
+			awful.spawn.with_shell("xinput --disable 11")
 			naughty.notify({ text = "Touchpad off" })
 		end
 	end)

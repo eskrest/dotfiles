@@ -14,11 +14,13 @@ vim.opt.list = true
 vim.opt.syntax = "on"
 vim.opt.pumheight = 10 -- pop up menu height
 vim.opt.pumblend = 10
-vim.opt.listchars:append({ tab = "│ ", multispace = "│ ", trail = "." })
+vim.opt.listchars:append({ tab = "│ ", multispace = "│   ", trail = "." })
 vim.opt.path:append({ ".", "**" })
 vim.opt.wildignore:append("**/node_modules/**")
-vim.opt.tabstop = 2
-vim.opt.shiftwidth = 2
+-- vim.opt.tabstop = 2
+vim.opt.tabstop = 4
+-- vim.opt.shiftwidth = 2
+vim.opt.shiftwidth = 4
 vim.opt.expandtab = true
 vim.opt.smartindent = true
 vim.opt.nu = true

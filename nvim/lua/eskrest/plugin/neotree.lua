@@ -18,7 +18,6 @@ function M.config()
 
 	neoTree.setup({
 		sort_case_insensitive = false,
-		enable_normal_mode_for_inputs = true,
 		window = {
 			width = 40,
 		},
