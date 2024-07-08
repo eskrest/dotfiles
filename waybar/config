@@ -39,7 +39,8 @@
         "format": "<span style=\"italic\">{}</span>"
     },
     "hyprland/language": {
-      "format": "{short}"
+      "format": "{short}",
+      "min-length": 2,
     },
     "sway/scratchpad": {
         "format": "{icon} {count}",
